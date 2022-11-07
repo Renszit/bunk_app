@@ -11,6 +11,28 @@ class BunkHome extends StatefulWidget {
 }
 
 class _BunkHomeState extends State<BunkHome> {
+  final textEditorController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    textEditorController.addListener(_printLatestValue);
+  }
+
+  @override
+  void dispose() {
+    textEditorController.dispose();
+    super.dispose();
+  }
+
+  void _printLatestValue() {
+    print('Second text field: ${textEditorController.text}');
+  }
+
+  void onPressed() {
+    print('login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,11 +49,13 @@ class _BunkHomeState extends State<BunkHome> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextFormField(
+                    controller: textEditorController,
                     decoration: const InputDecoration(
                       labelText: 'E-mail',
                     ),
                   ),
                   TextFormField(
+                    controller: textEditorController,
                     decoration: const InputDecoration(
                       labelText: 'password',
                     ),
@@ -42,9 +66,5 @@ class _BunkHomeState extends State<BunkHome> {
             ),
           ),
         ));
-  }
-
-  void onPressed() {
-    print('login');
   }
 }
