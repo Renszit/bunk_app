@@ -1,4 +1,4 @@
-import 'package:bunk_app/src/home/BunkHome.dart';
+import 'package:bunk_app/modules/auth/bunk_home.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
