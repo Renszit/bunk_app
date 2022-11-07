@@ -11,26 +11,31 @@ class BunkHome extends StatefulWidget {
 }
 
 class _BunkHomeState extends State<BunkHome> {
-  final textEditorController = TextEditingController();
+  final emailFieldController = TextEditingController();
+  final passwordFieldController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    textEditorController.addListener(_printLatestValue);
+    emailFieldController.addListener(_printLatestValue);
+    passwordFieldController.addListener(_printLatestValue);
   }
 
   @override
   void dispose() {
-    textEditorController.dispose();
+    emailFieldController.dispose();
+    passwordFieldController.dispose();
     super.dispose();
   }
 
   void _printLatestValue() {
-    print('Second text field: ${textEditorController.text}');
+    print('text  1 field} ${emailFieldController.text}');
+    print('text  2field} ${passwordFieldController.text}');
   }
 
   void onPressed() {
-    print('login');
+    print(
+        'login with following data: ${emailFieldController.text} and ${passwordFieldController.text}');
   }
 
   @override
@@ -49,18 +54,28 @@ class _BunkHomeState extends State<BunkHome> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextFormField(
-                    controller: textEditorController,
+                    key: const Key('email'),
+                    controller: emailFieldController,
                     decoration: const InputDecoration(
                       labelText: 'E-mail',
                     ),
                   ),
                   TextFormField(
-                    controller: textEditorController,
+                    key: const Key('password'),
+                    controller: passwordFieldController,
                     decoration: const InputDecoration(
                       labelText: 'password',
                     ),
                   ),
-                  TextButton(onPressed: onPressed, child: const Text('Login')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: onPressed, child: const Text('Login')),
+                      TextButton(
+                          onPressed: onPressed, child: const Text('register')),
+                    ],
+                  ),
                 ],
               ),
             ),
