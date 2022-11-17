@@ -14,11 +14,21 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
+  String email = '';
+  String password = '';
+
   void onPressed() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      //TODO: add login logic
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/home', ModalRoute.withName('/Dashboard'));
     }
   }
 
@@ -41,6 +51,9 @@ class _LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextFormField(
+                onSaved: (value) {
+                  email = value!;
+                },
                 decoration: const InputDecoration(
                   labelText: 'E-mail',
                 ),
@@ -49,6 +62,9 @@ class _LoginFormState extends State<LoginForm> {
                     : 'Please enter a valid email address',
               ),
               TextFormField(
+                onSaved: (value) {
+                  password = value!;
+                },
                 enableSuggestions: false,
                 obscureText: _obscureText,
                 decoration: InputDecoration(

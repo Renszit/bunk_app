@@ -12,12 +12,20 @@ class RegistrationForm extends StatefulWidget {
 class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
+  String email = '';
+  String password = '';
+  String firstName = '';
+
   void onPressed() {
     if (_formKey.currentState!.validate()) {
+      //TODO: Add registration logic
       _formKey.currentState?.save();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/home', ModalRoute.withName('/Dashboard'));
     }
   }
 
@@ -40,6 +48,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextFormField(
+                onSaved: (val) {
+                  email = val!;
+                },
                 decoration: const InputDecoration(
                   labelText: 'E-mail',
                 ),
@@ -48,6 +59,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     : 'Please enter a valid email address',
               ),
               TextFormField(
+                onSaved: (val) {
+                  firstName = val!;
+                },
                 decoration: const InputDecoration(
                   labelText: 'First name',
                 ),
@@ -59,6 +73,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 },
               ),
               TextFormField(
+                onSaved: (val) {
+                  password = val!;
+                },
                 obscureText: _obscureText,
                 decoration: InputDecoration(
                     labelText: 'Password',
@@ -77,10 +94,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                      onPressed: () {
-                        print('register with: ${_formKey.currentState}');
-                      },
-                      child: const Text('register')),
+                      onPressed: onPressed, child: const Text('register')),
                 ],
               ),
             ],
