@@ -23,7 +23,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void handleTogglePress() {
-    print('print');
     setState(() {
       _obscureText = !_obscureText;
     });
@@ -52,11 +51,11 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 enableSuggestions: false,
                 obscureText: _obscureText,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     labelText: 'password',
                     suffixIcon: ToggleButton(
                       isEnabled: true,
-                      
+                      onPressed: handleTogglePress,
                     )),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

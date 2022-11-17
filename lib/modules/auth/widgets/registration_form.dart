@@ -1,3 +1,4 @@
+import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/utils/validators.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class RegistrationForm extends StatefulWidget {
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
-
+  bool _obscureText = true;
   void onPressed() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
@@ -18,6 +19,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
         const SnackBar(content: Text('Processing Data')),
       );
     }
+  }
+
+  void handleTogglePress() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
   @override
@@ -52,9 +59,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 },
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: ToggleButton(
+                      isEnabled: true,
+                      onPressed: handleTogglePress,
+                    )),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please fill in your password';

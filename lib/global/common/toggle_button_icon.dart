@@ -4,9 +4,11 @@ class ToggleButton extends StatefulWidget {
   const ToggleButton({
     super.key,
     required this.isEnabled,
+    required this.onPressed,
   });
 
   final bool isEnabled;
+  final VoidCallback onPressed;
 
   @override
   State<ToggleButton> createState() => _ToggleButtonState();
@@ -21,6 +23,7 @@ class _ToggleButtonState extends State<ToggleButton> {
             setState(() {
               selected = !selected;
             });
+            widget.onPressed();
           }
         : null;
 
