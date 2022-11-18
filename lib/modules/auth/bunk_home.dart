@@ -21,7 +21,7 @@ class _BunkHomeState extends State<BunkHome> {
             SizedBox(
                 width: 300,
                 height: 300,
-                child: Center(child: Icon(Icons.bed_outlined, size: 200))),
+                child: Center(child: Icon(Icons.bed_outlined, size: 100))),
             LoginForm(),
           ],
         ));

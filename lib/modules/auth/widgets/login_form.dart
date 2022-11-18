@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/utils/validators.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../registration_page.dart';
@@ -17,10 +20,14 @@ class _LoginFormState extends State<LoginForm> {
   String email = '';
   String password = '';
 
+  final DatabaseReference _testRef =
+      FirebaseDatabase.instance.ref().child('test');
+
   void onPressed() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
+      _testRef.set('Hello World ${Random().nextInt(100)}');
       //TODO: add login logic
 
       ScaffoldMessenger.of(context).showSnackBar(
