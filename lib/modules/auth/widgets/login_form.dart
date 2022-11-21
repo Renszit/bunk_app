@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/utils/validators.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -26,9 +24,6 @@ class _LoginFormState extends State<LoginForm> {
   void onPressed() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
-      _testRef.set('Hello World ${Random().nextInt(100)}');
-      //TODO: add login logic
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
