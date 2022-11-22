@@ -1,4 +1,5 @@
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
+import 'package:bunk_app/global/services/Auth.dart';
 import 'package:bunk_app/global/utils/validators.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +19,29 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   void onPressed() {
     if (_formKey.currentState!.validate()) {
-      //TODO: Add registration logic
       _formKey.currentState?.save();
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
 
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', ModalRoute.withName('/Dashboard'));
+      Auth.createUser(email, password).then(((value) async => {
+            if (value != false)
+              {
+                await Auth.updateUser(firstName),
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/home', ModalRoute.withName('/Dashboard'))
+              }
+            else
+              {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Error')),
+                )
+              }
+          }));
+      //   Navigator.pushNamedAndRemoveUntil(
+      //       context, '/home', ModalRoute.withName('/Dashboard'));
+      // }
     }
   }
 

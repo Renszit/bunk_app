@@ -1,4 +1,6 @@
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
+import 'package:bunk_app/global/services/Auth.dart';
+
 import 'package:bunk_app/global/utils/validators.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +20,6 @@ class _LoginFormState extends State<LoginForm> {
   String email = '';
   String password = '';
 
-  final DatabaseReference _testRef =
-      FirebaseDatabase.instance.ref().child('test');
-
   void onPressed() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -29,8 +28,10 @@ class _LoginFormState extends State<LoginForm> {
         const SnackBar(content: Text('Processing Data')),
       );
 
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', ModalRoute.withName('/Dashboard'));
+      Auth.loginUser(email, password).then((val) => {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/home', ModalRoute.withName('/Dashboard'))
+          });
     }
   }
 
