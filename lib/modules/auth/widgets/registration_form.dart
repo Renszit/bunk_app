@@ -1,6 +1,7 @@
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/services/Auth.dart';
 import 'package:bunk_app/global/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationForm extends StatefulWidget {
@@ -21,12 +22,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );
-
       Auth.createUser(email, password).then(((value) async => {
-            if (value != false)
+            if (value is UserCredential)
               {
                 await Auth.updateUser(firstName),
                 Navigator.pushNamedAndRemoveUntil(
@@ -35,13 +32,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
             else
               {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Error')),
+                  SnackBar(content: Text('Error $value')),
                 )
               }
           }));
-      //   Navigator.pushNamedAndRemoveUntil(
-      //       context, '/home', ModalRoute.withName('/Dashboard'));
-      // }
     }
   }
 

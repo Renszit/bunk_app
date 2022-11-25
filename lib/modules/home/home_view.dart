@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var userName = user.displayName ?? user.email;
+    var userName = user?.displayName ?? user?.email;
 
     return Scaffold(
       appBar: AppBar(

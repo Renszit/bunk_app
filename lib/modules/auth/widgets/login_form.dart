@@ -2,6 +2,7 @@ import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/services/Auth.dart';
 
 import 'package:bunk_app/global/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +25,18 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );
-
       Auth.loginUser(email, password).then((val) => {
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/home', ModalRoute.withName('/Dashboard'))
+            if (val is UserCredential)
+              {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/home', ModalRoute.withName('/Dashboard'))
+              }
+            else
+              {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error $val')),
+                )
+              }
           });
     }
   }
@@ -39,6 +45,10 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void forgotPassWordAction() {
+    Navigator.pushNamed(context, '/forgotPassword');
   }
 
   @override
@@ -94,6 +104,9 @@ class _LoginFormState extends State<LoginForm> {
                                 title: 'Registration page')));
                       },
                       child: const Text('register')),
+                  TextButton(
+                      onPressed: forgotPassWordAction,
+                      child: const Text('forgot password'))
                 ],
               ),
             ],
