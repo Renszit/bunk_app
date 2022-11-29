@@ -1,5 +1,5 @@
-import 'package:bunk_app/global/services/Auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bunk_app/global/services/auth_functions.dart';
+import 'package:bunk_app/modules/appBar/bottom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -21,6 +21,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        child: BottomAppBarContents(),
       ),
       body: Container(
         decoration: const BoxDecoration(),

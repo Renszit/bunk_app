@@ -1,5 +1,5 @@
 import 'package:bunk_app/global/common/toggle_button_icon.dart';
-import 'package:bunk_app/global/services/Auth.dart';
+import 'package:bunk_app/global/services/auth_functions.dart';
 
 import 'package:bunk_app/global/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
