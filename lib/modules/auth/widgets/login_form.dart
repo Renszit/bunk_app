@@ -2,20 +2,22 @@ import 'package:bunk_app/global/common/toggle_button_icon.dart';
 import 'package:bunk_app/global/services/auth_functions.dart';
 
 import 'package:bunk_app/global/utils/validators.dart';
+import 'package:bunk_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../registration_page.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormState extends ConsumerState<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
   String email = '';
@@ -28,6 +30,7 @@ class _LoginFormState extends State<LoginForm> {
       Auth.loginUser(email, password).then((val) => {
             if (val is UserCredential)
               {
+                ref.read(userProvider.notifier).state = val,
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/home', ModalRoute.withName('/Dashboard'))
               }

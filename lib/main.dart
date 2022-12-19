@@ -1,12 +1,18 @@
 import 'package:bunk_app/modules/auth/bunk_home.dart';
 import 'package:bunk_app/modules/home/home_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'modules/auth/forgot_password.dart';
 
-Future<void> main() async =>
-    {WidgetsFlutterBinding.ensureInitialized(), runApp(MyApp())};
+final userProvider = StateProvider.autoDispose<UserCredential?>((ref) => null);
+
+Future<void> main() async => {
+      WidgetsFlutterBinding.ensureInitialized(),
+      runApp(ProviderScope(child: MyApp()))
+    };
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
@@ -37,7 +43,7 @@ class MyApp extends StatelessWidget {
           future: _fbApp,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              print('You have an error! ${snapshot.error.toString()}');
+              // print('You have an error! ${snapshot.error.toString()}');
               return const Text('Something went wrong');
             } else if (snapshot.hasData) {
               return const BunkHome(title: 'Login');

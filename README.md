@@ -35,3 +35,8 @@ samples, guidance on mobile development, and a full API reference.
   - view (dart): will contain the view of the module (max 300 lines of code, split it up into smaller widgets)
   - Business logic should be handled in controllers
   
+
+## packages used
+- State: riverpod
+- navigation: auto_route
+- localisation: flutter_localizations

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-// ignore: camel_case_types
 class Auth {
   static Future<Object> loginUser(emailAddress, password) async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
+
       return credential;
     } on FirebaseAuthException catch (e) {
       return e.code;
@@ -34,7 +34,13 @@ class Auth {
     return FirebaseAuth.instance.currentUser;
   }
 
-  static updateUser(String firstName) {
-    FirebaseAuth.instance.currentUser!.updateDisplayName(firstName);
+  static updateUser(String firstName) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      await user?.updateDisplayName(firstName);
+      return user;
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    }
   }
 }
